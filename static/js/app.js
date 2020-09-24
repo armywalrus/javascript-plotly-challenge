@@ -29,12 +29,15 @@ d3.json("../samples.json").then(function(data) {
     console.log(x_values)
     var y_values = samples[0].otu_ids
     console.log(y_values)
+    var labels = samples[0].otu_labels
+    console.log(labels)
 
 
     // Bar Chart
     var trace1 = {
       x: x_values,
       y: y_values,
+      text: labels,
       type: "bar"
     };
 
@@ -48,10 +51,12 @@ d3.json("../samples.json").then(function(data) {
     var trace2 = {
       x: x_values,
       y: y_values,
+      text: labels,
       mode: 'markers',
       marker: {
         size: x_values,
         color: y_values,
+        
       }
     }
 
@@ -60,8 +65,6 @@ d3.json("../samples.json").then(function(data) {
     var layout = {
       title: "ID:" + " " + " " + metadata[0].id,
       showlegend: false,
-      // height: 600,
-      // width: 600
     };
 
 
