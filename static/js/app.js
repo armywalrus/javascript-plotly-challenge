@@ -26,11 +26,13 @@ d3.json("../samples.json").then(function(data) {
   
     // Inital Plots
     var x_values = samples[0].sample_values
-    console.log(x_values)
+    // console.log(x_values)
     var y_values = samples[0].otu_ids
-    console.log(y_values)
+    // console.log(y_values)
     var labels = samples[0].otu_labels
-    console.log(labels)
+    // console.log(labels)
+    var frequency = metadata[0].wfreq
+    console.log(frequency)
 
 
     // Bar Chart
@@ -62,14 +64,38 @@ d3.json("../samples.json").then(function(data) {
 
     var data2 = [trace2];
 
-    var layout = {
+    var layout2 = {
       title: "ID:" + " " + " " + metadata[0].id,
       showlegend: false,
     };
 
+    // Gauge Chart
+    var data3 =[
+      {
+        domain: {x: [0, 1], y: [0, 1]},
+        value: frequency,
+        title: {text:"ID:" + " " + " " + metadata[0].id,},
+        type: "indicator",
+        mode: "gauge+number+delta",
+        delta: { reference: 380 },
+        gauge: {
+          axis: { range: [null, 9] },
+        steps: [
+          { range: [0, 5], color: "blue" },
+          { range: [6, 9], color: "green" }
+        ],
+        threshold: {
+          line: { color: "red", width: 4 },
+          thickness: 0.75,
+          value: 490}
+      }
+      }
+    ]
+    var layout3 = { width: 600, height: 450, margin: { t: 0, b: 0 } };
 
     Plotly.newPlot("bar", data, layout);
-    Plotly.newPlot("bubble", data2, layout);
+    Plotly.newPlot("bubble", data2, layout2);
+    Plotly.newPlot("gauge", data3, layout3);
 
   
 })
