@@ -44,12 +44,29 @@ d3.json("../samples.json").then(function(data) {
       title: "ID:" + " " + " " + " " + metadata[0].id
     };
 
+    // Bubble Chart
+    var trace2 = {
+      x: x_values,
+      y: y_values,
+      mode: 'markers',
+      marker: {
+        size: x_values,
+        color: y_values,
+      }
+    }
+
+    var data2 = [trace2];
+
+    var layout = {
+      title: "ID:" + " " + " " + metadata[0].id,
+      showlegend: false,
+      // height: 600,
+      // width: 600
+    };
 
 
-
-
-    Plotly.newPlot("bar", data, layout)
-
+    Plotly.newPlot("bar", data, layout);
+    Plotly.newPlot("bubble", data2, layout);
 
   
 })
