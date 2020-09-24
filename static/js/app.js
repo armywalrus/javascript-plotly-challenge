@@ -21,12 +21,12 @@ d3.json("../samples.json").then(function(data) {
     
    // Display metadata
     Object.entries(sampleMeta).forEach(function([key, value]) {
-      var keyName = []
-      var valuesName = []
-      keyName.push([key])
-      valuesName.push([value])
-      metadataInfo.append("div").text(keyName)
-      metadataInfo.append("div").text(valuesName)
+      // var keyName = []
+      // var valuesName = []
+      // keyName.push([key])
+      // valuesName.push([value])
+      metadataInfo.append("div").text(key + ":" + " " + " " + " " + " " + " " + value)
+      // metadataInfo.append("div").text(valuesName)
       
   
   
