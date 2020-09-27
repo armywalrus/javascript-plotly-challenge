@@ -1,4 +1,10 @@
 // Gauge Chart
+
+// Fetch the JSON data using D3
+function buildGauge(sample) {
+    d3.json("../../samples.json").then(function (data) {
+  
+
      var degrees = 180 - level
      radius = .5;
      var radians = degrees * Math.PI / 180;
