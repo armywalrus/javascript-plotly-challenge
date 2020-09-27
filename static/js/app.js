@@ -1,6 +1,6 @@
 // Fetch the JSON data using D3
 function buildTable(sample) {
-  d3.json("../samples.json").then(function (data) {
+  d3.json("../../samples.json").then(function (data) {
     var samplesData = data;
     var samples = samplesData.samples
     var names = samplesData.names
@@ -27,7 +27,7 @@ function buildTable(sample) {
 
 // Fetch the JSON data using D3
 function buildCharts(sample) {
-  d3.json("../samples.json").then(function (data) {
+  d3.json("../../samples.json").then(function (data) {
     var samplesData = data;
     var samples = samplesData.samples
     var metadata = samplesData.metadata
@@ -91,7 +91,7 @@ function buildCharts(sample) {
 function init(){
  var location = d3.select("#selDataset")
 
-  d3.json("../samples.json").then(function (data) {
+  d3.json("../../samples.json").then(function (data) {
     var names = data.names
     names.forEach((x)=> {
       location.append("option").text(x).property("value", x)
