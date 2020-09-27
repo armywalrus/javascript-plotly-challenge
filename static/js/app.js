@@ -7,8 +7,8 @@ function buildTable(sample) {
     var metadata = samplesData.metadata
     var filterData = metadata.filter(x => x.id == sample)
     var sampleMeta = filterData[0]
-    var frequency = metadata[0].wfreq
-    console.log(frequency)
+    // var frequency = metadata[0].wfreq
+    // console.log(frequency)
 
 
     // Metadata Display
@@ -33,6 +33,7 @@ function buildCharts(sample) {
     var samples = samplesData.samples
     var metadata = samplesData.metadata
     var filterData = samples.filter(x => x.id == sample)
+    var filterFreq = samples.filter(x => x.wfreq == sample)
 
     // Inital Plots
     var x_values = filterData[0].sample_values
@@ -81,87 +82,10 @@ function buildCharts(sample) {
       width: 1000
     };
 
-    // Gauge Chart
-    var frequency = metadata.wfreq
-    console.log(frequency)
-
-    var trace3 = {
-      values: [
-        50/9, 
-        50/9, 
-        50/9, 
-        50/9, 
-        50/9, 
-        50/9, 
-        50/9, 
-        50/9, 
-        50/9, 
-        50
-      ],
-      rotation: 90,
-      text: [
-        "0-1",
-        "1-2",
-        "2-3",
-        "3-4",
-        "4-5",
-        "5-6",
-        "6-7",
-        "7-8",
-        "8-9",
-        ""
-      ],
-      textinfo: "text",
-      textposition: "inside",
-      marker: {
-        colors: [
-          "rgba(249, 243, 236, .5)",
-          "rgba(244, 242, 229, .5)",
-          "rgba(233, 231, 201, .5)",
-          "rgba(229, 232, 176, .5)",
-          "rgba(213, 229, 153, .5)",
-          "rgba(183, 205, 143, .5)",
-          "rgba(139, 192, 134, .5)",
-          "rgba(131, 181, 137, .5)",
-          "rgba(76, 175, 80, .0)"
-          // "rgba(14, 127, 0, .5)",
-          // "rgba(110, 154, 22, .5)",
-          // "rgba(170, 202, 42, .5)",
-          // "rgba(202, 209, 95, .5)",
-          // "rgba(210, 206, 145, .5)",
-          // "rgba(232, 226, 202, .5)",
-          // "rgba(255, 255, 255, 0)"
-        ]
-      },
-      labels: [
-        "0-1",
-        "1-2",
-        "2-3",
-        "3-4",
-        "4-5",
-        "5-6",
-        "6-7",
-        "7-8",
-        "8-9",
-        ""
-      ],
-      hoverinfo: "label",
-      hole: .5,
-      type: "pie",
-      showlegend: false
-    }
-
-    var data3 = [trace3];
-
-    var layout3 = {
-      title: "ID:" + " " + " " + sample,
-      showlegend: false,
-    };
 
 
     Plotly.newPlot("bar", data, layout);
     Plotly.newPlot("bubble", data2, layout2);
-    Plotly.newPlot("gauge", data3, layout3);
 
 
   })
