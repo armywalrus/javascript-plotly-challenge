@@ -1,52 +1,61 @@
 // Fetch the JSON data using D3
-d3.json("../samples.json").then(function(data) {
-  var samplesData = data;
-  var samples = samplesData.samples
-  var names = samplesData.names
-  var metadata = samplesData.metadata
-  var sampleMeta = metadata[0]
+function buildTable(sample) {
+  d3.json("../samples.json").then(function (data) {
+    var samplesData = data;
+    var samples = samplesData.samples
+    var names = samplesData.names
+    var metadata = samplesData.metadata
+    var filterData = metadata.filter(x => x.id == sample)
+    var sampleMeta = filterData[0]
+    // var frequency = metadata[0].wfreq
+    // console.log(frequency)
+
 
     // Metadata Display
     // Identify the html element to display the data
     var metadataInfo = d3.select("#sample-metadata")
-    
-   // Display metadata
-    Object.entries(sampleMeta).forEach(function([key, value]) {
+    metadataInfo.html("")
+
+    // Display metadata
+    Object.entries(sampleMeta).forEach(function ([key, value]) {
       metadataInfo.append("div").text(key + ":" + " " + " " + " " + " " + " " + value)
     }
     )
-    }
-    );  
-  
-  // Fetch the JSON data using D3
-  d3.json("../samples.json").then(function(data) {
+  }
+  );
+}
+
+// Fetch the JSON data using D3
+function buildCharts(sample) {
+  d3.json("../samples.json").then(function (data) {
     var samplesData = data;
     var samples = samplesData.samples
     var metadata = samplesData.metadata
-  
+    var filterData = samples.filter(x => x.id == sample)
+
     // Inital Plots
-    var x_values = samples[0].sample_values
+    var x_values = filterData[0].sample_values
     // console.log(x_values)
-    var y_values = samples[0].otu_ids
+    var y_values = filterData[0].otu_ids
     // console.log(y_values)
-    var labels = samples[0].otu_labels
+    var labels = filterData[0].otu_labels
     // console.log(labels)
-    var frequency = metadata[0].wfreq
-    console.log(frequency)
 
 
     // Bar Chart
     var trace1 = {
-      x: x_values,
-      y: y_values,
-      text: labels,
-      type: "bar"
+      x: x_values.slice(0, 10),
+      y: y_values.slice(0, 10).map(x => `otu ${x}`),
+      text: labels.slice(0, 10),
+      type: "bar",
+      orientation: "h"
+
     };
 
     var data = [trace1];
 
     var layout = {
-      title: "ID:" + " " + " " + " " + metadata[0].id
+      title: "ID:" + " " + " " + " " + sample
     };
 
     // Bubble Chart
@@ -58,48 +67,45 @@ d3.json("../samples.json").then(function(data) {
       marker: {
         size: x_values,
         color: y_values,
-        
+
       }
     }
 
     var data2 = [trace2];
 
     var layout2 = {
-      title: "ID:" + " " + " " + metadata[0].id,
+      title: "ID:" + " " + " " + sample,
       showlegend: false,
     };
 
-    // Gauge Chart
-    var data3 =[
-      {
-        domain: {x: [0, 1], y: [0, 1]},
-        value: frequency,
-        title: {text:"ID:" + " " + " " + metadata[0].id,},
-        type: "indicator",
-        mode: "gauge+number+delta",
-        delta: { reference: 380 },
-        gauge: {
-          axis: { range: [null, 9] },
-        steps: [
-          { range: [0, 5], color: "blue" },
-          { range: [6, 9], color: "green" }
-        ],
-        threshold: {
-          line: { color: "red", width: 4 },
-          thickness: 0.75,
-          value: 490}
-      }
-      }
-    ]
-    var layout3 = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+
 
     Plotly.newPlot("bar", data, layout);
     Plotly.newPlot("bubble", data2, layout2);
-    Plotly.newPlot("gauge", data3, layout3);
+    // Plotly.newPlot("gauge", data3, layout3);
 
-  
+
+  })
+}
+//Dropdown box list
+function init(){
+ var location = d3.select("#selDataset")
+
+  d3.json("../samples.json").then(function (data) {
+    var names = data.names
+    names.forEach((x)=> {
+      location.append("option").text(x).property("value", x)
+    })
+    var firstId = names[0]
+    buildTable(firstId)
+    buildCharts(firstId)
 })
+}
 
+init()
 
+function optionChanged(newSample) {
+  buildTable(newSample)
+  buildCharts(newSample)
+}
 
- 

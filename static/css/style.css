@@ -229,9 +229,18 @@ select {
   display: none;
 }
 
-#key {
-  display: inline-block;
+.chart {
+  max-height: calc(200px + 20px) !important;
+  overflow:hidden;
 }
-#value {
-  display: inline-block;
+
+{
+  type: 'scatter',
+  x:[0],
+  y:[0],
+  marker: {
+    size: 14,
+    color:'850000'
+  },
+  showlegend: false
 }
